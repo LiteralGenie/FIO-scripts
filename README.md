@@ -4,6 +4,12 @@
 -   skip runs if data (folder) already exists
 -   handle KiB / MiB in fio output
 
+```
+python3 -m venv venv
+. ./venv/bin/activate
+python fiodriver.py sdX -o /tmp/fio/sdX
+```
+
 ---
 
 # Description

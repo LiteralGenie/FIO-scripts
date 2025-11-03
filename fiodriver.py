@@ -8,6 +8,14 @@ IODEPTH = [1, 4, 16, 32, 64]
 SCRIPT_DIR = Path("./scripts")
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(add_help=False)
+    parser.add_argument("device")
+    parser.add_argument("-o", dest="output_dir", type=Path)
+    args = parser.parse_args()
+    return args
+
+
 def main():
     args = parse_args()
 
@@ -17,6 +25,8 @@ def main():
     start = time.time()
 
     for depth in IODEPTH:
+        print("depth", depth)
+
         # RANDOM WRITES
         runfio(
             args.device,
@@ -75,26 +85,20 @@ def runfio(device: str, depth: int, script: Path, output_dir: Path):
     if output_dir.exists():
         return
 
+    cmd = [ 
+        "./runfio.sh",
+        "-d", device,
+        "-n", "1",
+        "-i", str(depth),
+        "-f", str(script),
+        "-o", str(output_dir),
+    ]  # fmt: skip
+    print(" ".join(cmd))
+
     subprocess.run(
-        [ 
-            "./runfio.sh",
-            "-d", device,
-            "-n", "1",
-            "-i", str(depth),
-            "-f", str(script),
-            "-o", str(output_dir),
-        ]  # fmt: skip
-        ,
+        cmd,
         check=True,
     )
-
-
-def parse_args():
-    parser = argparse.ArgumentParser(add_help=False)
-    parser.add_argument("device")
-    parser.add_argument("-o", dest="output_dir", type=Path)
-    args = parser.parse_args()
-    return args
 
 
 if __name__ == "__main__":
