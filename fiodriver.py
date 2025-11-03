@@ -82,21 +82,39 @@ def main():
 
 
 def runfio(device: str, depth: int, script: Path, output_dir: Path):
-    if output_dir.exists():
-        return
+    if not output_dir.exists():
+        cmd = [ 
+            "./runfio.sh",
+            "-d", device,
+            "-n", "1",
+            "-i", str(depth),
+            "-f", str(script),
+            "-o", str(output_dir),
+        ]  # fmt: skip
+        print(" ".join(cmd))
 
-    cmd = [ 
-        "./runfio.sh",
-        "-d", device,
-        "-n", "1",
-        "-i", str(depth),
-        "-f", str(script),
-        "-o", str(output_dir),
-    ]  # fmt: skip
-    print(" ".join(cmd))
+        subprocess.run(
+            cmd,
+            check=True,
+        )
 
     subprocess.run(
-        cmd,
+        [
+            "./parser.sh",
+            str(output_dir),
+            "4",
+            "8",
+            "16",
+            "32",
+            "64",
+            "128",
+            "256",
+            "512",
+            "1024",
+            "2048",
+            "4096",
+            "8192",
+        ],
         check=True,
     )
 

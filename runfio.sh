@@ -106,4 +106,4 @@ echo
 echo "========================================================================"
 echo
 
-./parser.sh "$directory" "${block_sizes[@]}"
+# ./parser.sh "$directory" "${block_sizes[@]}"

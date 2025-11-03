@@ -2,7 +2,6 @@
 
 -   convert fiodriver.sh to python
 -   skip runs if data (folder) already exists
--   handle KiB / MiB in fio output
 
 ```
 python3 -m venv venv

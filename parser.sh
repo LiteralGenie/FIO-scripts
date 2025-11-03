@@ -35,12 +35,12 @@ for bs in ${block_sizes[@]}; do
 		check=$(grep 'bw=' "${directory}/${bs}.txt" | awk '{print $2}' | grep "K")
 
 		# MB -> KB
-		if [ "$check" = "" ] && { [ "$scale" = "KB" ] || [ "$scale" = "KiB" ]; }; then
+		if [ "$check" = "" ] && [ "$scale" = "KB" ]; then
 			num=$(grep 'bw=' "${directory}/${bs}.txt" | awk '{print $2}' | grep -o '[0-9.]*')
 			res=$(echo "${num}*1024" | bc)
 			echo "$res" >> "${directory}/out.txt"
 		# KB -> MB
-		elif [ ! "$check" = "" ] && { [ "$scale" = "MB" ] || [ "$scale" = "MiB" ]; }; then
+		elif [ ! "$check" = "" ] && [ "$scale" = "MB" ]; then
 			num=$(grep 'bw=' "${directory}/${bs}.txt" | awk '{print $2}' | grep -o '[0-9.]*')
 			res=$(echo "${num}/1024" | bc)
 			echo "$res" >> "${directory}/out.txt"
