@@ -71,6 +71,16 @@ def main():
             check=True,
         )
 
+    for name in ["sdc_seq_w", "sdc_seq_r", "sdc_rand_w", "sdc_rand_r"]:
+        subprocess.run(
+            [
+                "convert",
+                str(output_dir / f"{name}.eps"),
+                str(output_dir / f"{name}.png"),
+            ],
+            check=True,
+        )
+
     end_time = time.time()
     elapsed = int(end_time - start)
 
