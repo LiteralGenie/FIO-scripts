@@ -1,15 +1,28 @@
+# Forked changes
+
+-   convert fiodriver.sh to python
+-   skip runs if data (folder) already exists
+-   handle KiB / MiB in fio output
+
+---
+
 # Description
+
 This is a FIO benchmark suite. Using the above scripts you can generate
 datasets and plots regarding device throughput.
 
 # Dependencies
+
 Make sure you have:
-- FIO
-- Python 3+ (with matplotlib and numpy)
+
+-   FIO
+-   Python 3+ (with matplotlib and numpy)
 
 # Run the fiodriver.sh script
+
 First, edit fiodriver.sh to set your configuration. Then you can run the script
 like this:
+
 ```
 Usage:
 	fiodriver.sh -o <output-dir> [-h]
@@ -18,14 +31,18 @@ Options:
 	-o   Output directory
 	-h   Show usage
 ```
+
 An example run is the following:
+
 ```bash
 fiodriver.sh -o SAMSUNG_850_PRO
 ```
+
 By default, the script will run with:
-- random/sequential reads and writes
-- for a variety of different I/O queue depths
-- for different block sizes
+
+-   random/sequential reads and writes
+-   for a variety of different I/O queue depths
+-   for different block sizes
 
 All output is saved in the 'output-dir' folder (e.g. SAMSUNG_850_PRO). The
 script will also generate various plots based on your configuration. For a
@@ -33,7 +50,9 @@ finer-grained control of the runs, you can execute the runfio.sh and plotfio.sh
 scripts manually.
 
 # Run scripts manually
+
 To run FIO on a device manually use the runfio.sh script:
+
 ```
 Usage:
        runfio.sh -d <device> -n <njobs> -i <iodepth> -f <script> -o <output-dir> [-h]
@@ -46,16 +65,20 @@ Options:
        -o   Output directory
        -h   Show usage
 ```
+
 An example run is the following:
+
 ```bash
 runfio.sh -d sdb -n 1 -i 32 -f scripts/rand-write.fio -o sdb_random_writes
 ```
+
 This configuration will run with a variety of different block sizes by default.
 Apart from the output produced for each block size, in the end we will have a
 csv type file with name "out.txt" holding the throughput achieved for each
 block size.
 
 In order to create a plot from the output, you can use the plotfio.py script:
+
 ```
 Usage:
        plotfio.py [ -h ]
@@ -82,7 +105,9 @@ Options:
        -t TITLE                  Title of output plot
 
 ```
+
 An example run is the following:
+
 ```bash
 plotfio.py -f rand_w_sdb_1iodepth_1threads/out.txt rand_w_sdb_32iodepth_1threads/out.txt \
            -l "iodepth-1" "iodepth-32"                                                   \
