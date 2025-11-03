@@ -36,17 +36,17 @@ for bs in ${block_sizes[@]}; do
 
 		# MB -> KB
 		if [ "$check" = "" ] && [ "$scale" = "KB" ]; then
-			num=$(grep 'bw=' "${directory}/${bs}.txt" | awk '{print $2}' | grep -o '[0-9.]*')
+			num=$(grep -m 1 'bw=' "${directory}/${bs}.txt" | awk '{print $2}' | grep -o '[0-9.]*')
 			res=$(echo "${num}*1024" | bc)
 			echo "$res" >> "${directory}/out.txt"
 		# KB -> MB
 		elif [ ! "$check" = "" ] && [ "$scale" = "MB" ]; then
-			num=$(grep 'bw=' "${directory}/${bs}.txt" | awk '{print $2}' | grep -o '[0-9.]*')
+			num=$(grep -m 1 'bw=' "${directory}/${bs}.txt" | awk '{print $2}' | grep -o '[0-9.]*')
 			res=$(echo "${num}/1024" | bc)
 			echo "$res" >> "${directory}/out.txt"
 		# Same scale, do nothing
 		else 
-			grep 'bw=' "${directory}/${bs}.txt" | awk '{print $2}' | grep -o '[0-9.]*' >> "${directory}/out.txt"
+			grep -m 1 'bw=' "${directory}/${bs}.txt" | awk '{print $2}' | grep -o '[0-9.]*' >> "${directory}/out.txt"
 		fi
 	else
 		check=$(grep 'aggrb=' "${directory}/${bs}.txt" | awk '{print $3}' | grep "K")

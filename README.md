@@ -2,6 +2,7 @@
 
 -   convert fiodriver.sh to python
 -   skip runs if data (folder) already exists
+-   output files had multiple fio runs? changed grep to only scan first one
 
 ```
 python3 -m venv venv
